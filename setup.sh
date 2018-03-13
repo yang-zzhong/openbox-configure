@@ -1,21 +1,27 @@
-#$/bin/sh
+#!/bin/sh
 
 # 更新源
-pacman -Syu
+sudo pacman -Syu
+
 # 安装依赖
-pacman -S openbox compton pcmanfm tint2 fcitx pamixer
+sudo pacman -S openbox compton pcmanfm tint2 fcitx pamixer
 
 # 复制配置到指定目录
-config_dir=~/.config/openbox
+config_dir=`realpath ~/.config/openbox`
 
 if [ ! -d $config_dir ]; then
     mkdir $config_dir
 fi
 
-files=[autostart, environment, rc.xml, menu.xml]
+files=(
+    "autostart"
+    "environment"
+    "rc.xml"
+    "menu.xml"
+)
 
 for file in $files
 do
-    cp $file $config_dir
+    cp `realpath $file` $config_dir
 done
 
